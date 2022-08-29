@@ -1,0 +1,35 @@
+.wrap {
+  min-width: 25vw;
+  min-height: 27vh;
+  padding: 10px;
+  overflow: auto;
+  max-height: 38vh;
+  max-width: 80vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.townSearchList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ant-list-item:hover {
+  background-color: #f6f6f6;
+  transition: ease-in-out all 0.3s;
+}
+
+.townSearchList span {
+  font-weight: 600;
+}
+
+.townSearchItem {
+  border: 1px solid #333;
+  padding: 20px;
+}
+
+.add-btn {
+  margin: 0 10px 0 5px;
+}

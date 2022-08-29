@@ -1,0 +1,21 @@
+.ant-layout-header{
+  background: #fff;
+  min-height: 80px;
+  padding-left: 20px;
+}
+
+.ant-layout {
+  background: #fff;
+}
+
+.container {
+  max-width: 1400px;
+  padding: 0 100px;
+  margin: 0 auto;
+}
+
+.logo {
+  background:url('../assets/img/logo.png') no-repeat;
+  height: 65px;
+  width: 65px;
+}

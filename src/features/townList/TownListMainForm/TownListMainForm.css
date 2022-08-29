@@ -1,0 +1,66 @@
+.container__list-form {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  gap: 20px;
+}
+
+.cardList {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 150px;
+  height: 200px;
+  overflow: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 10px;
+  background: rgba(71, 147, 255, 0.2);
+  border-radius: 10px;
+}
+
+.card__title {
+  color: #4793FF;
+  font-size: 3.5em;
+  font-weight: 500;
+}
+
+.ico-del {
+  position: absolute;
+  top: 5px;
+  right: 2px;
+  zIndex: 4;
+  fontSize: 1em;
+  font-weight: 500;
+  color: #939CB0;
+}
+
+.ico-del:hover {
+  color: #f6a71c;
+  transition: ease-in-out all 0.3s;
+}
+
+.card__desc {
+  color: #939CB0;
+  /*textTransform: capitalize;*/
+  font-size: 1.2em;
+}
+
+.card span {
+  font-size: 1.2em;
+  font-weight: 500;
+  font-weight: 500;
+}
+.cardTitle span{
+  font-weight: 700;
+}
+
+.controlButtonWrap {
+  display: flex;
+  gap: 20px;
+}

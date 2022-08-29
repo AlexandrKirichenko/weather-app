@@ -1,0 +1,26 @@
+.typography {
+  color: #4793FF;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.container__header {
+  padding-top: 7px;
+  width: 1400px;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.plus-ico {
+  font-size: 32px;
+  color: #4793FF;
+}
+
+.plus-ico:hover {
+  color: #0065ff;
+  transition: ease-in-out all 0.3s;
+}

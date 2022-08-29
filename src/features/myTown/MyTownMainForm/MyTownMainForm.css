@@ -1,0 +1,132 @@
+.container__townMainForm {
+  padding-top: 20px;
+}
+
+.form-wrapper {
+  display: flex;
+  gap: 15px;
+}
+
+.container .this-day {
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 2px 5px 25px -3px rgba(180, 180, 180, 0.25);
+  max-height: 300px;
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+
+.temperature {
+  font-size: 4em;
+  color: #4793FF;
+}
+
+.this-day--main {
+  height: 300px;
+}
+
+.weather-description {
+  font-size: 2em;
+}
+
+.flex-block {
+  display: flex;
+  justify-content: space-between;
+}
+
+.weather-icon {
+  height: 128px;
+  width: 128px;
+}
+
+.cloud__img {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.this__day_info {
+  position: relative;
+  padding: 40px;
+  max-width: 750px;
+  flex-grow: 1;
+  width: 100%;
+  box-shadow: 2px 5px 25px -3px rgba(180, 180, 180, 0.25);
+  border-radius: 20px;
+  background: #fff;
+  max-height: 300px;
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  z-index: 4;
+  margin-bottom: 25px;
+}
+
+.indicator__name {
+  min-width: 110px;
+}
+
+.item:last-of-type{
+  margin-bottom: 0;
+}
+
+.indicator__value .indicator__value--dark{
+  color: black;
+  font-weight: 500;
+}
+
+.ico-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 100%;
+  box-shadow: 1px 4px 10px -1px rgba(71, 147, 255, 0.2);
+}
+
+.span-1:before {
+  content: '';
+  background: url('../../../../public/svg/1.svg') no-repeat center center;
+  width: 38px;
+  height: 38px;
+  display: block;
+  text-align: center;
+  line-height: 25px;
+}
+
+.span-2:before {
+  content: '';
+  background: url('../../../../public/svg/2.svg') no-repeat center center;
+  width: 38px;
+  height: 38px;
+  display: block;
+  text-align: center;
+  line-height: 25px;
+}
+
+.span-3:before {
+  content: '';
+  background: url('../../../../public/svg/3.svg') no-repeat center center;
+  width: 38px;
+  height: 38px;
+  display: block;
+  text-align: center;
+  line-height: 25px;
+}
+
+.span-4:before {
+  content: '';
+  background: url('../../../../public/svg/4.svg') no-repeat center center;
+  width: 38px;
+  height: 38px;
+  display: block;
+  text-align: center;
+  line-height: 25px;
+}
