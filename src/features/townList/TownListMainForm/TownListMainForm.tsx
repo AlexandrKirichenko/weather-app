@@ -1,8 +1,6 @@
-import { Spin } from 'antd';
+import { Spin, Tooltip } from 'antd';
 import { FC, useEffect, useState } from 'react';
-import { CloseOutlined } from '@ant-design/icons';
-import { ModalWindow } from '../../../UIKit/ModalWindow';
-import { TownSearchMainForm } from '../../townSearch/TownSearchMainForm';
+import { CloseOutlined, RightSquareOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { townListSlice } from '../townListSlice';
 import { townListWeatherSlice } from '../townListWeatherSlice';
@@ -13,8 +11,6 @@ import { MyTownMainForm } from '../../myTown/MyTownMainForm';
 import './TownListMainForm.css';
 
 export const TownListMainForm: FC = () => {
-  // const [showTownSearchModalWindow, setShowTownSearchModalWindow] =
-  //   useState<boolean>(false);
   const dispatch = useAppDispatch();
 
   const townList = useAppSelector(townListSlice.selectors.getTownList);
@@ -36,11 +32,11 @@ export const TownListMainForm: FC = () => {
     };
   }, []);
 
-  const handleDeleteTownBtn = (id: string) => {
+  const handleDeleteTown = (id: string) => {
     dispatch(townListSlice.actions.deleteTownItem(id));
   };
 
-  const handleOpenTownBtnClk = (id: string) => {
+  const handleOpenTownBtn = (id: string) => {
     const path = getRoutePath('TownListItemPage', id);
     dispatch(appSlice.actions.redirect(path));
   };
@@ -59,34 +55,38 @@ export const TownListMainForm: FC = () => {
               <div className="card" key={townItem.id}>
                 <div className="cardTitle">
                   <span>{townItem.name}</span>
-                  {/*<pre>{JSON.stringify(townItem, null, 2)}</pre>*/}
                 </div>
                 <div className="controlButtonWrap">
-                  {/*<button onClick={() => handleDeleteTownBtn(townItem.id)}>*/}
-                  {/*  delete*/}
-                  {/*</button>*/}
-                  <CloseOutlined
-                    className="ico-del"
-                    onClick={() => handleDeleteTownBtn(townItem.id)}
-                  />
-                  <button onClick={() => handleOpenTownBtnClk(townItem.id)}>
-                    open
-                  </button>
+                  <Tooltip title="Delete town from saved" color="#8b9dc3">
+                    <CloseOutlined
+                      className="ico-del"
+                      onClick={() => handleDeleteTown(townItem.id)}
+                    />
+                  </Tooltip>
+                  <Tooltip title="Open more weather info" color="#8b9dc3">
+                    <RightSquareOutlined
+                      className="ico-open"
+                      onClick={() => handleOpenTownBtn(townItem.id)}
+                    />
+                  </Tooltip>
                 </div>
                 {!townWeatherDataItem && (
                   <Spin size="large" tip="Loading..."></Spin>
                 )}
                 {townWeatherDataItem && (
                   <>
-                    {/*{JSON.stringify(townWeatherData[townItem.id], null, 2)}*/}
-                    <div className="card__title">
-                      {Math.round(townWeatherDataItem.main.temp - 273.15)}°
+                    <div>
+                      <div className="card__title">
+                        {Math.round(townWeatherDataItem.main.temp - 273.15)}°
+                      </div>
+                      <div className="card__subtitle">
+                        Feels like:{' '}
+                        {Math.round(
+                          townWeatherDataItem.main.feels_like - 273.15,
+                        )}
+                        °
+                      </div>
                     </div>
-                    {/*<img*/}
-                    {/*  alt="weather"*/}
-                    {/*  className="weather-icon"*/}
-                    {/*  src={`icons/${townWeatherDataItem?.weather[0]?.icon}.png`}*/}
-                    {/*/>*/}
                     <div className="card__desc">
                       {townWeatherDataItem.weather[0]?.description}
                     </div>

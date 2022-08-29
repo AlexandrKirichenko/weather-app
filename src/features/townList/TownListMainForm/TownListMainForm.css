@@ -18,16 +18,28 @@
   padding: 10px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   position: relative;
-  gap: 10px;
+  /*gap: 10px;*/
   background: rgba(71, 147, 255, 0.2);
   border-radius: 10px;
+  background: rgba(71, 147, 255, 0.2);
+}
+
+.card:hover {
+  background: rgba(35, 123, 255, 0.2);
+  transition: ease-in-out all 0.3s;
 }
 
 .card__title {
   color: #4793FF;
-  font-size: 3.5em;
+  font-size: 4em;
   font-weight: 500;
+}
+
+.card__subtitle {
+  color: #939CB0;
+  font-size: 1em;
 }
 
 .ico-del {
@@ -38,6 +50,16 @@
   fontSize: 1em;
   font-weight: 500;
   color: #939CB0;
+}
+
+.ico-open {
+  position: absolute;
+  bottom: 7px;
+  right: 2px;
+  zIndex: 4;
+  fontSize: 1em;
+  font-weight: 500;
+  color: white;
 }
 
 .ico-del:hover {
@@ -56,8 +78,10 @@
   font-weight: 500;
   font-weight: 500;
 }
+
 .cardTitle span{
   font-weight: 700;
+  font-size: 1.2em;
 }
 
 .controlButtonWrap {
