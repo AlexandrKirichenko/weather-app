@@ -1,38 +1,28 @@
+import { ArrowLeftOutlined } from '@ant-design/icons';
+import { Tooltip, Col, Divider, Row } from 'antd';
 import { FC, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { UPDATE_INTERVAL } from '../../../config';
 import { townListWeatherSlice } from '../townListWeatherSlice';
-import { townListSlice } from '../townListSlice';
-import { TownWeatherDataItem } from '../../../types/TownWeatherData';
+// import { townListSlice } from '../townListSlice';
+// import { TownWeatherDataItem } from '../../../types/TownWeatherData';
 import { getRoutePath } from '../../../router';
 import { appSlice } from '../../../store/app';
-import styles from './TownListItemMainForm.module.scss';
+import './TownListItemMainForm.css';
 
 export const TownListItemMainForm: FC = () => {
   const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
-  const townList = useAppSelector(townListSlice.selectors.getTownList);
-  const townWeatherData = useAppSelector(
-    townListWeatherSlice.selectors.getTownWeatherData,
-  );
+
   const fetchWeatherHistoryRequest = useAppSelector(
     townListWeatherSlice.selectors.getFetchWeatherHistory,
   );
-
-  const townListItem = townList.find((item) => item.id === id);
-
-  let townWeatherDataItem: TownWeatherDataItem | null | undefined = null;
-
-  if (id) {
-    townWeatherDataItem = townWeatherData[id];
-  }
 
   useEffect(() => {
     const fetch = () => {
       console.log('TownListItem update');
       if (id) {
-        dispatch(townListWeatherSlice.thunks.fetchWeatherTownForIdThunk(id));
         dispatch(townListWeatherSlice.thunks.fetchWeatherHistoryThunk(id));
       }
     };
@@ -46,37 +36,46 @@ export const TownListItemMainForm: FC = () => {
     };
   }, []);
 
-  const handleReturnToTownListBtnClk = () => {
+  const handleReturnToTownListBtn = () => {
     const path = getRoutePath('TownListPage');
     dispatch(appSlice.actions.redirect(path));
   };
 
   return (
-    <div className={styles.wrap}>
-      <div>
-        <button onClick={handleReturnToTownListBtnClk}>
-          return to town list
-        </button>
-      </div>
-      {!townListItem && <div>Id was not found! = {id}</div>}
-      {townListItem && (
-        <div className={styles.townInfoWrap}>
-          <div>ДАННЫЕ ПО ГОРОДУ</div>
-          <pre>{JSON.stringify(townListItem, null, 2)}</pre>
-        </div>
-      )}
-
-      {townWeatherDataItem && (
-        <div className={styles.townWeatherWrap}>
-          <div>ДАННЫЕ ПО ТЕКУЩЕЙ ПОГОДЕ</div>
-          <pre>{JSON.stringify(townWeatherDataItem, null, 2)}</pre>
-        </div>
-      )}
+    <div className="townListITemWrap">
+      <Tooltip title="Back to town list" color="#8b9dc3">
+        <ArrowLeftOutlined
+          className="ico-back"
+          onClick={handleReturnToTownListBtn}
+        />
+      </Tooltip>
 
       {fetchWeatherHistoryRequest.data && (
-        <div className={styles.townHistoryWrap}>
-          <div>ДАННЫЕ ПО ИСТОРИИ ПОГОДЫ</div>
-          <pre>{JSON.stringify(fetchWeatherHistoryRequest.data, null, 2)}</pre>
+        <div className="weatherForecast">
+          <div>7 Day Weather Forecast</div>
+          <Row>
+            <Col className="7days-col" flex={3}>
+              <div className="7days-col__item">
+                <h3 className="item__title">
+                  {fetchWeatherHistoryRequest.data.timezone.split('/')[1]}
+                </h3>
+                <div className="item__date">
+                  {new Date(
+                    fetchWeatherHistoryRequest?.data?.daily[0]?.dt * 1000,
+                  )
+                    .toLocaleString()
+                    .slice(0, 10)}
+                </div>
+                {/*<img*/}
+                {/*  alt="weather"*/}
+                {/*  className="weather-icon"*/}
+                {/*  src={`icons/${fetchWeatherHistoryRequest.data?.current.weather[0]?.icon}.png`}*/}
+                {/*/>*/}
+              </div>
+            </Col>
+            <Col flex={1}></Col>
+            <Col flex={2}></Col>
+          </Row>
         </div>
       )}
     </div>

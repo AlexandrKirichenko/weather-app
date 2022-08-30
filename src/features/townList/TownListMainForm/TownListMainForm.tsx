@@ -75,7 +75,7 @@ export const TownListMainForm: FC = () => {
                 )}
                 {townWeatherDataItem && (
                   <>
-                    <div>
+                    <div className="position-control">
                       <div className="card__title">
                         {Math.round(townWeatherDataItem.main.temp - 273.15)}°
                       </div>

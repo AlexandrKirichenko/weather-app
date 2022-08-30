@@ -1,0 +1,38 @@
+.townListITemWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ico-back {
+  font-size: 1.8em;
+  color: #939CB0;
+}
+
+.townInfoWrap {
+  border: 2px solid #333333;
+  max-width: 950px;
+  height: 200px;
+  overflow: auto;
+}
+
+.weatherForecast {
+  width: min(100%, 950px)
+}
+
+.townHistoryWrap {
+  border: 2px solid #333333;
+  width: 400px;
+  height: 800px;
+  overflow: auto;
+}
+
+.item__title {
+  font-size: 2em;
+  fontWeight: '600',
+}
+
+.item__date {
+  font-size: 1.5em;
+  fontWeight: '500',
+}
