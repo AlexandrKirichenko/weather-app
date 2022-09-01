@@ -15,7 +15,6 @@ export const { actions, reducer } = createSlice({
   initialState,
   reducers: {
     addTownListItem: (state, action: PayloadAction<TownListItem>) => {
-      //делаем проверку, вдруг такой город уже есть в списке?
       const idx = state.townList.findIndex(
         (item) =>
           item.lat === action.payload.lat &&

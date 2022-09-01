@@ -10,7 +10,6 @@ export const fetchWeatherAllTownThunk = createAsyncThunk(
   `${SLICE_NAME}/fetchWeatherAllThunk`,
   async (_, { dispatch, getState }) => {
     const townList = (getState() as RootState).townList.townList;
-    console.log(townList);
     for (let i = 0; i < townList.length; i++) {
       const townItem = townList[i];
       if (townItem) {
