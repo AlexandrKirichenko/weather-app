@@ -1,3 +1,6 @@
+import { TownListItem } from '../../types/TownListItem';
+import { TownWeatherDataItem } from '../../types/TownWeatherData';
+
 export interface TownSearchRequestDataItem {
   name: string;
   lat: number;
@@ -6,3 +9,7 @@ export interface TownSearchRequestDataItem {
   state: string;
 }
 
+export interface FetchShowTownData {
+  townListItem: TownListItem;
+  townWeatherDataItem: TownWeatherDataItem;
+}

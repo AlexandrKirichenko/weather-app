@@ -5,8 +5,7 @@ import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { UPDATE_INTERVAL } from '../../../config';
 import { townListWeatherSlice } from '../townListWeatherSlice';
-// import { townListSlice } from '../townListSlice';
-// import { TownWeatherDataItem } from '../../../types/TownWeatherData';
+import { townListSlice } from '../townListSlice';
 import { getRoutePath } from '../../../router';
 import { appSlice } from '../../../store/app';
 import './TownListItemMainForm.css';
@@ -14,10 +13,13 @@ import './TownListItemMainForm.css';
 export const TownListItemMainForm: FC = () => {
   const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
-
   const fetchWeatherHistoryRequest = useAppSelector(
     townListWeatherSlice.selectors.getFetchWeatherHistory,
   );
+
+  const townList = useAppSelector(townListSlice.selectors.getTownList);
+
+  const townListItem = townList.find((item) => item.id === id);
 
   useEffect(() => {
     const fetch = () => {
@@ -41,6 +43,16 @@ export const TownListItemMainForm: FC = () => {
     dispatch(appSlice.actions.redirect(path));
   };
 
+  const days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
+
   return (
     <div className="townListITemWrap">
       <Tooltip title="Back to town list" color="#8b9dc3">
@@ -49,33 +61,88 @@ export const TownListItemMainForm: FC = () => {
           onClick={handleReturnToTownListBtn}
         />
       </Tooltip>
-
       {fetchWeatherHistoryRequest.data && (
         <div className="weatherForecast">
-          <div>7 Day Weather Forecast</div>
-          <Row>
-            <Col className="7days-col" flex={3}>
-              <div className="7days-col__item">
-                <h3 className="item__title">
-                  {fetchWeatherHistoryRequest.data.timezone.split('/')[1]}
-                </h3>
+          {fetchWeatherHistoryRequest.data.daily.map((el: any, i) => (
+            <div
+              key={el.dt}
+              className="this__day_info this__day_info__forecast"
+            >
+              <div className="weatherForecast__main">
                 <div className="item__date">
-                  {new Date(
-                    fetchWeatherHistoryRequest?.data?.daily[0]?.dt * 1000,
-                  )
-                    .toLocaleString()
-                    .slice(0, 10)}
+                  <span>{days[`${new Date(el.dt * 1000).getDay()}`]}</span>(
+                  {new Date(el.dt * 1000).toLocaleString().slice(0, 5)})
                 </div>
-                {/*<img*/}
-                {/*  alt="weather"*/}
-                {/*  className="weather-icon"*/}
-                {/*  src={`icons/${fetchWeatherHistoryRequest.data?.current.weather[0]?.icon}.png`}*/}
-                {/*/>*/}
+                <div className="weatherForecast__temperature">
+                  {Math.round(el.temp.day)}°
+                </div>
+                <img
+                  alt="weather"
+                  className="weather-icon"
+                  src={`../icons/${el.weather[0].icon}.png`}
+                />
+                <div className="weatherForecast__desc">
+                  {el.weather[0].description}
+                </div>
               </div>
-            </Col>
-            <Col flex={1}></Col>
-            <Col flex={2}></Col>
-          </Row>
+              <div>
+                <div className="this__day_info_items">
+                  <div className="item">
+                    <div className="ico-circle">
+                      <span className="span-1"></span>
+                    </div>
+                    <div className="indicator__name">Temperature</div>
+                    <div className="indicator__value">
+                      <span className="indicator__value indicator__value--dark">
+                        {Math.round(el.temp.day)}° - Feels like{' '}
+                        {Math.round(el.feels_like.day)}
+                        °C
+                      </span>
+                    </div>
+                  </div>
+                  <div className="item">
+                    <div className="ico-circle">
+                      <span className="span-2"></span>
+                    </div>
+                    <div className="indicator__name">Pressure</div>
+                    <div className="indicator__value">
+                      <span className="indicator__value indicator__value--dark">
+                        {el.pressure} hPa
+                      </span>
+                    </div>
+                  </div>
+                  <div className="item">
+                    <div className="ico-circle">
+                      <span className="span-3"></span>
+                    </div>
+                    <div className="indicator__name">Humidity</div>
+                    <div className="indicator__value">
+                      <span className="indicator__value indicator__value--dark">
+                        {el.humidity}%{' '}
+                        {el.humidity > 70 ? '- High' : '- Normal'}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="item">
+                    <div className="ico-circle">
+                      <span className="span-4"></span>
+                    </div>
+                    <div className="indicator__name">Wind</div>
+                    <div className="indicator__value">
+                      <span className="indicator__value indicator__value--dark">
+                        {el.wind_speed} m/s
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <img
+                  className="cloud__img"
+                  src="../img/cloud.png"
+                  alt="cloud"
+                />
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>

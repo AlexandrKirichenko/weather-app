@@ -1,5 +1,5 @@
 import { Spin, Tooltip } from 'antd';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState, MouseEvent } from 'react';
 import { CloseOutlined, RightSquareOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { townListSlice } from '../townListSlice';
@@ -7,8 +7,13 @@ import { townListWeatherSlice } from '../townListWeatherSlice';
 import { getRoutePath } from '../../../router';
 import { appSlice } from '../../../store/app';
 import { UPDATE_INTERVAL } from '../../../config';
-import { MyTownMainForm } from '../../myTown/MyTownMainForm';
+import { MainTownMainForm } from '../../mainTown/MainTownMainForm';
 import './TownListMainForm.css';
+
+import { mainTownSlice } from '../../mainTown/mainTownSlice';
+import { townSearchSlice } from '../../townSearch/townSearchSlice';
+import { FirstTownItemDataView } from './FirstTownItemDataView';
+import { SearchTownItemDataView } from './SearchTownItemDataView';
 
 export const TownListMainForm: FC = () => {
   const dispatch = useAppDispatch();
@@ -19,18 +24,46 @@ export const TownListMainForm: FC = () => {
     townListWeatherSlice.selectors.getTownWeatherData,
   );
 
+  const isNoAccessToGeolocation = useAppSelector(
+    mainTownSlice.selectors.getIsNoAccessToGeolocation,
+  );
+
+  const [mode, setMode] = useState<
+    'showFirstTownItem' | 'showStartInfo' | 'showSearchTown'
+  >('showStartInfo');
+
+  const fetchShowTownDataRequest = useAppSelector(
+    townSearchSlice.selectors.getFetchShowTownData,
+  );
+
+  useEffect(() => {
+    if (fetchShowTownDataRequest.data) {
+      setMode('showSearchTown');
+    }
+  }, [fetchShowTownDataRequest]);
+
   useEffect(() => {
     const fetch = () => {
       dispatch(townListWeatherSlice.thunks.fetchWeatherAllTownThunk());
     };
     fetch();
-    console.log('TownListMainForm timeOut start');
     const intervalId = setInterval(fetch, UPDATE_INTERVAL);
     return () => {
-      console.log('TownListMainForm timeOut stop');
       clearInterval(intervalId);
     };
   }, []);
+
+  useEffect(() => {
+    if (isNoAccessToGeolocation && townList.length > 0) {
+      setMode('showFirstTownItem');
+    }
+  }, [isNoAccessToGeolocation]);
+
+  useEffect(() => {
+    if (townList.length === 0) {
+      setMode('showStartInfo');
+    }
+  }, [townList]);
 
   const handleDeleteTown = (id: string) => {
     dispatch(townListSlice.actions.deleteTownItem(id));
@@ -41,21 +74,47 @@ export const TownListMainForm: FC = () => {
     dispatch(appSlice.actions.redirect(path));
   };
 
+  const handleFavoriteTownItemTitleClk = (
+    e: MouseEvent<HTMLElement>,
+    townItemId: string,
+  ) => {
+    e.preventDefault();
+    setMode('showFirstTownItem');
+    dispatch(townListSlice.actions.setToFirst(townItemId));
+  };
+
   return (
     <div>
       <div className="container__list-form">
         <div>
-          <MyTownMainForm />
+          {mode === 'showStartInfo' && <MainTownMainForm />}{' '}
+          {mode === 'showFirstTownItem' && (
+            <FirstTownItemDataView
+              townList={townList}
+              townWeatherData={townWeatherData}
+            />
+          )}
+          {mode === 'showSearchTown' && fetchShowTownDataRequest.data && (
+            <SearchTownItemDataView
+              townListItem={fetchShowTownDataRequest.data.townListItem}
+              townWeatherDataItem={
+                fetchShowTownDataRequest.data.townWeatherDataItem
+              }
+            />
+          )}
         </div>
+
         <div className="cardList">
           {townList.map((townItem) => {
             const townWeatherDataItem = townWeatherData[townItem.id];
 
             return (
-              <div className="card" key={townItem.id}>
-                <div className="cardTitle">
-                  <span>{townItem.name}</span>
-                </div>
+              <div
+                className="card"
+                key={townItem.id}
+                onClick={(e) => handleFavoriteTownItemTitleClk(e, townItem.id)}
+              >
+                <div className="cardTitle">{townItem.name}</div>
                 <div className="controlButtonWrap">
                   <Tooltip title="Delete town from saved" color="#8b9dc3">
                     <CloseOutlined
@@ -70,9 +129,7 @@ export const TownListMainForm: FC = () => {
                     />
                   </Tooltip>
                 </div>
-                {!townWeatherDataItem && (
-                  <Spin size="large" tip="Loading..."></Spin>
-                )}
+                {!townWeatherDataItem && <Spin size="large" tip="Loading..." />}
                 {townWeatherDataItem && (
                   <>
                     <div className="position-control">

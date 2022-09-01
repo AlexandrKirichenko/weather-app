@@ -20,10 +20,10 @@
   flex-direction: column;
   justify-content: space-between;
   position: relative;
-  /*gap: 10px;*/
   background: rgba(71, 147, 255, 0.2);
   border-radius: 10px;
   background: rgba(71, 147, 255, 0.2);
+  cursor: pointer;
 }
 
 .card:hover {
@@ -85,9 +85,10 @@
   font-weight: 500;
 }
 
-.cardTitle span{
+.cardTitle{
   font-weight: 700;
   font-size: 1.2em;
+  color: black;
 }
 
 .controlButtonWrap {

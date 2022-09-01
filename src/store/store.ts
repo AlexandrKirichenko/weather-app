@@ -14,7 +14,7 @@ import {
 import { townListSlice } from '../features/townList/townListSlice';
 import { townSearchSlice } from '../features/townSearch/townSearchSlice';
 import { townListWeatherSlice } from '../features/townList/townListWeatherSlice';
-import { myTownSlice } from '../features/myTown/myTownSlice';
+import { mainTownSlice } from '../features/mainTown/mainTownSlice';
 import { appSlice } from './app';
 
 export const rootReducer = combineReducers({
@@ -22,7 +22,7 @@ export const rootReducer = combineReducers({
   townSearch: townSearchSlice.reducer,
   townList: townListSlice.reducer,
   townListWeather: townListWeatherSlice.reducer,
-  myTownSlice: myTownSlice.reducer,
+  mainTownSlice: mainTownSlice.reducer,
 });
 
 const persistConfig: PersistConfig<any> = {

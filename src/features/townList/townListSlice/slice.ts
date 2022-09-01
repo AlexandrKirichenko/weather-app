@@ -31,5 +31,17 @@ export const { actions, reducer } = createSlice({
         (item) => item.id !== action.payload,
       );
     },
+    setToFirst: (state, action: PayloadAction<string>) => {
+      const findIdx = state.townList.findIndex(
+        (item) => item.id === action.payload,
+      );
+      if (findIdx > 0) {
+        const currentElement = state.townList[findIdx];
+        state.townList = [
+          currentElement,
+          ...state.townList.filter((item) => item.id !== action.payload),
+        ];
+      }
+    },
   },
 });

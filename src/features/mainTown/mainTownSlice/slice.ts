@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestSliceStateProperty } from '../../../store/types';
 import {
   makeRequestCaseToBuilder,
@@ -9,17 +9,24 @@ import { SLICE_NAME } from './types';
 import * as thunks from './thunks';
 
 interface InitialState {
+  isNoAccessToGeolocation: boolean;
   fetchMyTownDataRequest: RequestSliceStateProperty<TownWeatherDataItem>;
 }
 
 const initialState: InitialState = {
   fetchMyTownDataRequest: makeRequestSliceStateProperty<TownWeatherDataItem>(),
+  isNoAccessToGeolocation: false,
 };
 
 export const { actions, reducer } = createSlice({
   name: SLICE_NAME,
   initialState,
-  reducers: {},
+  reducers: {
+    setIsNoAccessToGeolocation: (state, action: PayloadAction<boolean>) => {
+      state.isNoAccessToGeolocation = action.payload;
+    },
+    clear: () => initialState,
+  },
   extraReducers: (builder) => {
     makeRequestCaseToBuilder<InitialState>(
       builder,

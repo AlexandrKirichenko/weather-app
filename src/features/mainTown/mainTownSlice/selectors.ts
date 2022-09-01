@@ -4,4 +4,7 @@ import { TownWeatherDataItem } from '../../../types/TownWeatherData';
 export const getFetchMyTownDataRequest = (
   state: RootState,
 ): RequestSliceStateProperty<TownWeatherDataItem> =>
-  state.myTownSlice.fetchMyTownDataRequest;
+  state.mainTownSlice.fetchMyTownDataRequest;
+
+export const getIsNoAccessToGeolocation = (state: RootState): boolean =>
+  state.mainTownSlice.isNoAccessToGeolocation;

@@ -1,12 +1,50 @@
 .townListITemWrap {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.weatherForecast__main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8em;
+}
+
+.weatherForecast__title {
+  text-align: center;
+  font-size: 2em;
+  font-weight: 500;
+  margin-bottom: 0.8em;
+  color: #4793FF;
+}
+
+.weatherForecast__desc {
+  font-size: 1.3em;
+  color: #939CB0;
 }
 
 .ico-back {
   font-size: 1.8em;
   color: #939CB0;
+}
+
+.this__day_info__forecast {
+  padding: 10px;
+  margin-bottom: 8px;
+  max-height: 265px;
+  max-width: 665px;
+}
+
+.weatherForecast__temperature {
+  font-size: 2.2em;
+  color: #4793FF;
+  font-weight: 600;
+  text-align: center;
 }
 
 .townInfoWrap {
@@ -28,11 +66,16 @@
 }
 
 .item__title {
-  font-size: 2em;
+  font-size: 1.7em;
   fontWeight: '600',
 }
 
 .item__date {
   font-size: 1.5em;
   fontWeight: '500',
+}
+
+.item__date span {
+  font-size: 1.4em;
+  fontWeight: '600';
 }
