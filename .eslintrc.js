@@ -13,7 +13,7 @@ module.exports = {
     'plugin:import/typescript',
     'prettier',
   ],
-  plugins: ['@typescript-eslint', 'import'],
+  plugins: ['@typescript-eslint', 'import', 'prettier'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.json',
@@ -33,6 +33,9 @@ module.exports = {
     'import/resolver': 'webpack',
   },
   rules: {
+    "prettier/prettier": ["error",{
+      "endOfLine": "auto"}
+    ],
     'no-console': types.WARN,
     'no-template-curly-in-string': types.WARN,
     'require-atomic-updates': types.ERROR,
