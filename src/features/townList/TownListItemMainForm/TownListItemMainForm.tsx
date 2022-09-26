@@ -1,11 +1,10 @@
 import { ArrowLeftOutlined } from '@ant-design/icons';
-import { Tooltip, Col, Divider, Row } from 'antd';
+import { Tooltip } from 'antd';
 import { FC, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { UPDATE_INTERVAL } from '../../../config';
 import { townListWeatherSlice } from '../townListWeatherSlice';
-import { townListSlice } from '../townListSlice';
 import { getRoutePath } from '../../../router';
 import { appSlice } from '../../../store/app';
 import './TownListItemMainForm.css';
@@ -17,22 +16,16 @@ export const TownListItemMainForm: FC = () => {
     townListWeatherSlice.selectors.getFetchWeatherHistory,
   );
 
-  const townList = useAppSelector(townListSlice.selectors.getTownList);
-
-  const townListItem = townList.find((item) => item.id === id);
-
   useEffect(() => {
     const fetch = () => {
-      console.log('TownListItem update');
       if (id) {
         dispatch(townListWeatherSlice.thunks.fetchWeatherHistoryThunk(id));
       }
     };
     fetch();
-    console.log('TownListItemMainForm timeOut start');
+
     const intervalId = setInterval(fetch, UPDATE_INTERVAL);
     return () => {
-      console.log('TownListItemMainForm timeOut stop');
       clearInterval(intervalId);
       dispatch(townListWeatherSlice.actions.clear());
     };
@@ -52,7 +45,7 @@ export const TownListItemMainForm: FC = () => {
     'Friday',
     'Saturday',
   ];
-
+  
   return (
     <div className="townListITemWrap">
       <Tooltip title="Back to town list" color="#8b9dc3">
@@ -63,15 +56,15 @@ export const TownListItemMainForm: FC = () => {
       </Tooltip>
       {fetchWeatherHistoryRequest.data && (
         <div className="weatherForecast">
-          {fetchWeatherHistoryRequest.data.daily.map((el: any, i) => (
+          {fetchWeatherHistoryRequest.data.daily.map((el: any) => (
             <div
               key={el.dt}
               className="this__day_info this__day_info__forecast"
             >
               <div className="weatherForecast__main">
                 <div className="item__date">
-                  <span>{days[`${new Date(el.dt * 1000).getDay()}`]}</span>(
-                  {new Date(el.dt * 1000).toLocaleString().slice(0, 5)})
+                  {/*<span>{days[`${new Date(el.dt * 1000).getDay()}`]}</span>*/}
+                  {new Date(el.dt * 1000).toLocaleString().slice(0, 5)}
                 </div>
                 <div className="weatherForecast__temperature">
                   {Math.round(el.temp.day)}°

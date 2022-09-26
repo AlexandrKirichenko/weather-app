@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { Spin, Typography } from 'antd';
+import { Spin } from 'antd';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { mainTownSlice } from '../mainTownSlice';
 
@@ -45,7 +45,7 @@ export const MainTownMainForm: FC = () => {
         });
       });
       geolocationPromise
-        .then((response) => {
+        .then(() => {
           setGeolocationIsLoading(false);
         })
         .catch((error) => {

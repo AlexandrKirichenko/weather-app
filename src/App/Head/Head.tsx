@@ -9,8 +9,6 @@ export const Head: FC = () => {
   const [showTownSearchModalWindow, setShowTownSearchModalWindow] =
     useState<boolean>(false);
 
-  const { Title } = Typography;
-
   const handleModalClose = () => {
     setShowTownSearchModalWindow(false);
   };

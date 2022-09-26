@@ -33,9 +33,9 @@ module.exports = {
     'import/resolver': 'webpack',
   },
   rules: {
-    "prettier/prettier": ["error",{
-      "endOfLine": "auto"}
-    ],
+  //   "prettier/prettier": ["error",{
+  //     "endOfLine": "auto"}
+  //   ],
     'no-console': types.WARN,
     'no-template-curly-in-string': types.WARN,
     'require-atomic-updates': types.ERROR,
