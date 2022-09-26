@@ -45,7 +45,6 @@ export const TownListItemMainForm: FC = () => {
     'Friday',
     'Saturday',
   ];
-  
   return (
     <div className="townListITemWrap">
       <Tooltip title="Back to town list" color="#8b9dc3">
@@ -63,7 +62,7 @@ export const TownListItemMainForm: FC = () => {
             >
               <div className="weatherForecast__main">
                 <div className="item__date">
-                  {/*<span>{days[`${new Date(el.dt * 1000).getDay()}`]}</span>*/}
+                  <span>{days[`${new Date(el.dt * 1000).getDay()}`]}</span>
                   {new Date(el.dt * 1000).toLocaleString().slice(0, 5)}
                 </div>
                 <div className="weatherForecast__temperature">
